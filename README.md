@@ -1,6 +1,23 @@
 #
 
-## DMAP
+## DMap
 
 A generics-based simple, vertically distrubuted map structure.
 Supports keys of types that implement a `String()` method (`fmt.Stringer` interface), and any values.
+
+### Benchmarks
+
+```bash
+go test -bench=Benchmark -benchmem -benchtime=100x .
+goos: linux
+goarch: amd64
+pkg: github.com/althk/dmap
+cpu: Intel(R) Core(TM) i7-1065G7 CPU @ 1.30GHz
+BenchmarkSet/100000_keys-8         	     100	    648292 ns/op	  200401 B/op	    5023 allocs/op
+BenchmarkSet/1000000_keys-8        	     100	   6933790 ns/op	 1960100 B/op	   50347 allocs/op
+BenchmarkGet-8                     	     100	       931.2 ns/op	      40 B/op	       2 allocs/op
+BenchmarkKeys-8                    	     100	   5415901 ns/op	 8944398 B/op	      57 allocs/op
+PASS
+ok  	github.com/althk/dmap	3.865s
+
+```
