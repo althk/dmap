@@ -63,11 +63,11 @@ func (m DMap[K, V]) Keys() []K {
 			shard.mu.RLock()
 			defer shard.mu.RUnlock()
 
+			mu.Lock()
 			for key := range shard.items {
-				mu.Lock()
 				keys = append(keys, key)
-				mu.Unlock()
 			}
+			mu.Unlock()
 			wg.Done()
 		}(shard)
 	}
