@@ -54,6 +54,26 @@ func TestKeys(t *testing.T) {
 	require.ElementsMatch(t, got, keys)
 }
 
+func TestHas(t *testing.T) {
+	m := New[string, string](10)
+	prepareTestData(m, 10000, "some val")
+
+	for i := 0; i < 50; i++ {
+		ok := m.Has(keys[rand.Intn(len(keys))])
+		require.True(t, ok)
+	}
+	ok := m.Has("nonexistentkey")
+	require.False(t, ok)
+}
+
+func TestCount(t *testing.T) {
+	m := New[string, string](10)
+	prepareTestData(m, 10000, "some val")
+
+	got := m.Count()
+	require.EqualValues(t, 10000, got)
+}
+
 func BenchmarkSet(b *testing.B) {
 	l := len(keyPrefixes)
 	for i := 0; i < b.N; i++ {
@@ -81,6 +101,12 @@ func BenchmarkGet(b *testing.B) {
 func BenchmarkKeys(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		bm.Keys()
+	}
+}
+
+func BenchmarkCount(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		bm.Count()
 	}
 }
 

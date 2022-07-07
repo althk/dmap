@@ -81,3 +81,19 @@ func (m DMap[K, V]) Remove(key K) {
 	defer shard.mu.Unlock()
 	delete(shard.items, key)
 }
+
+func (m DMap[K, V]) Count() int64 {
+	count := 0
+	for i := 0; i < len(m); i++ {
+		shard := m[i]
+		shard.mu.RLock()
+		count += len(shard.items)
+		shard.mu.RUnlock()
+	}
+	return int64(count)
+}
+
+func (m DMap[K, V]) Has(key K) bool {
+	_, ok := m.Get(key)
+	return ok
+}
