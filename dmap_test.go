@@ -9,12 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-type CustomVal struct {
-	v string
-}
-
 var keyPrefixes = []string{"key", "otherkey", "oldkey", "keynew", "fookey"}
-var valPrefix = "val"
 var keys []string
 
 var bm DMap[string, string] // used for benchmarking Get
@@ -94,7 +89,7 @@ func BenchmarkSet(b *testing.B) {
 
 func BenchmarkGet(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		bm.Get(keys[i])
+		bm.Get(keys[i%100000])
 	}
 }
 
