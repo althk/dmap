@@ -2,7 +2,7 @@
 
 ## DMap
 
-A generics-based simple, vertically distrubuted map structure.
+A generics-based simple, horizontally distrubuted (sharded) map structure.
 Supports keys of types that implement a `String()` method (`fmt.Stringer` interface), and any values.
 
 ### Benchmarks
